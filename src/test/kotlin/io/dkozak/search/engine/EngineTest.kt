@@ -1,8 +1,8 @@
 package io.dkozak.search.engine
 
 import io.dkozak.search.model.EngineConfiguration
-import io.dkozak.search.model.FifoOpenList
 import io.dkozak.search.model.Node
+import io.dkozak.search.model.bfs.FifoOpenList
 import org.junit.jupiter.api.Test
 
 data class NumNode(val num: Int) : Node

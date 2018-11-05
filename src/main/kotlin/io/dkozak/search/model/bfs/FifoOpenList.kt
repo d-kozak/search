@@ -1,5 +1,7 @@
-package io.dkozak.search.model
+package io.dkozak.search.model.bfs
 
+import io.dkozak.search.model.Node
+import io.dkozak.search.model.OpenList
 import java.util.*
 
 class FifoOpenList<NodeType : Node> : OpenList<NodeType> {

@@ -1,6 +1,6 @@
 package io.dkozak.search.model
 
-class EngineConfiguration<NodeType : Node>
+open class EngineConfiguration<NodeType : Node>
 (
         val initialState: NodeType,
         val openList: OpenList<NodeType>,
