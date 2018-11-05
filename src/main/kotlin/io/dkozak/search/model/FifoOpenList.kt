@@ -2,7 +2,7 @@ package io.dkozak.search.model
 
 import java.util.*
 
-class QueueBasedSearchQueue<NodeType : Node> : SearchQueue<NodeType> {
+class FifoOpenList<NodeType : Node> : OpenList<NodeType> {
     private val queue: Deque<NodeType> = LinkedList()
 
     override fun next(): NodeType = queue.poll()

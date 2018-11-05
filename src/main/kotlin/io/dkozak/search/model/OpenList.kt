@@ -1,6 +1,6 @@
 package io.dkozak.search.model
 
-interface SearchQueue<NodeType : Node> {
+interface OpenList<NodeType : Node> {
     fun next(): NodeType
     fun addNodes(nodes: List<NodeType>)
     fun isEmpty(): Boolean

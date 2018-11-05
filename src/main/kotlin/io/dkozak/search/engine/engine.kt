@@ -7,7 +7,7 @@ import io.dkozak.search.model.Node
 fun <NodeType : Node> search(engineConfiguration: EngineConfiguration<NodeType>, logger: (String) -> Unit = {}) = engineConfiguration.executeSearch(logger)
 
 private fun <NodeType : Node> EngineConfiguration<NodeType>.executeSearch(logger: (String) -> Unit): Node? {
-    val queue = searchQueue
+    val queue = openList
     queue.addNode(initialState)
     while (!queue.isEmpty()) {
         val nextNode = queue.next()
