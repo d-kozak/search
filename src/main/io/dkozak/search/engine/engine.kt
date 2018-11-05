@@ -4,9 +4,9 @@ import io.dkozak.search.model.EngineConfiguration
 import io.dkozak.search.model.Node
 
 
-fun search(engineConfiguration: EngineConfiguration, logger: (String) -> Unit = {}) = engineConfiguration.executeSearch(logger)
+fun <NodeType : Node> search(engineConfiguration: EngineConfiguration<NodeType>, logger: (String) -> Unit = {}) = engineConfiguration.executeSearch(logger)
 
-private fun EngineConfiguration.executeSearch(logger: (String) -> Unit): Node? {
+private fun <NodeType : Node> EngineConfiguration<NodeType>.executeSearch(logger: (String) -> Unit): Node? {
     val queue = searchQueue
     queue.addNode(initialState)
     while (!queue.isEmpty()) {

@@ -1,10 +1,10 @@
 package io.dkozak.search.model
 
-class EngineConfiguration
+class EngineConfiguration<NodeType : Node>
 (
-        val initialState: Node,
-        val searchQueue: SearchQueue,
-        val expandNode: (Node) -> List<Node>,
-        val nodeFilter: (Node) -> Boolean,
-        val isFinalState: (Node) -> Boolean
+        val initialState: NodeType,
+        val searchQueue: SearchQueue<NodeType>,
+        val expandNode: (NodeType) -> List<NodeType>,
+        val nodeFilter: (NodeType) -> Boolean,
+        val isFinalState: (NodeType) -> Boolean
 )
