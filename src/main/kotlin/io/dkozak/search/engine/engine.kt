@@ -22,6 +22,7 @@ private fun <NodeType : Node> EngineConfiguration<NodeType>.executeSearch(logger
         logger("Children after filtering $filtered")
         logger("\t${children.size - filtered.size} were filtered out")
         queue.addNodes(filtered)
+        println("Qeue: $queue")
     }
     logger("Whole state space explored and no final node found, returning null")
     return null

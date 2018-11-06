@@ -12,4 +12,6 @@ class FifoOpenList<NodeType : Node> : OpenList<NodeType> {
     override fun addNodes(nodes: List<NodeType>) = nodes.forEach { queue.addLast(it) }
 
     override fun isEmpty(): Boolean = queue.isEmpty()
+
+    override fun toString(): String = queue.toString()
 }
