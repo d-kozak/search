@@ -1,8 +1,9 @@
 package io.dkozak.search.astar
 
 import io.dkozak.search.astar.sokoban.SokobanNode
+import io.dkozak.search.astar.sokoban.isFinished
 import io.dkozak.search.astar.sokoban.parseMap
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class AStarTest {
@@ -41,6 +42,83 @@ class AStarTest {
 
         """.trimIndent()
         assertEquals(expected, map.toString())
+    }
+
+    @Test
+    fun testFinishing() {
+        val serializedMap = """
+                        07 12 04
+                        XXXXXXX
+                        XG....X
+                        X.....X
+                        XGXG.GX
+                        XXXX.XX
+                        X.J...X
+                        X.J...X
+                        X..XXXX
+                        X.J.JMX
+                        X.....X
+                        X...XXX
+                        XXXXX  """.trimIndent()
+        val map = parseMap(serializedMap)
+        assertFalse(map.isFinished)
+    }
+
+    @Test
+    fun testFinishing2() {
+        val serializedMap = """
+                        07 12 04
+                        XXXXXXX
+                        XJ....X
+                        X.....X
+                        XJXJ.JX
+                        XXXX.XX
+                        X.....X
+                        X.....X
+                        X..XXXX
+                        X....MX
+                        X.....X
+                        X...XXX
+                        XXXXX  """.trimIndent()
+        val map = parseMap(serializedMap)
+        assertFalse(map.isFinished)
+    }
+
+    @Test
+    fun testFinishing3() {
+        val serializedMap = """
+                        04 04 01
+                        XXXXX
+                        XMJGX
+                        XXXXX
+                        XXXXX
+                        """.trimIndent()
+        val map = parseMap(serializedMap)
+        println(map)
+        var expected = """
+            XXXXX
+            XMJGX
+            XXXXX
+            XXXXX
+
+        """.trimIndent()
+        assertEquals(expected, map.toString())
+
+        val currentState = SokobanNode(map)
+        assertFalse(currentState.isGoal)
+        val nextStates = currentState.getChildren()
+        assertEquals(1, nextStates.size)
+        val nextState = nextStates[0].first
+        println(nextState)
+        expected = """
+            XXXXX
+            X.MJX
+            XXXXX
+            XXXXX
+
+        """.trimIndent()
+        assertEquals(expected, nextState.toString())
+        assertTrue(nextState.isGoal)
     }
 
     @Test
