@@ -8,6 +8,30 @@ import org.junit.jupiter.api.Test
 class AStartSearchTest {
 
     @Test
+    fun competitionMap() {
+        val serializedMap = """
+                        07 12 04
+                        XXXXXXX
+                        XG....X
+                        X.....X
+                        XGXG.GX
+                        XXXX.XX
+                        X.J...X
+                        X.J...X
+                        X..XXXX
+                        X.J.JMX
+                        X.....X
+                        X...XXX
+                        XXXXX  """.trimIndent()
+
+        val map = parseMap(serializedMap)
+        val state = SokobanNode(map)
+        val result = search(state)
+
+        result.forEach(::println)
+    }
+
+    @Test
     fun simpleGame() {
         val serializedMap = """
                         04 04 01
