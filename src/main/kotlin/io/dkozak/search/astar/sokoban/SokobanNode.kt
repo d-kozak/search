@@ -22,7 +22,7 @@ class SokobanNode(val sokobanMap: SokobanMap) : SimpleNode("NULL", 0, isGoal = s
                 val newDynamic = sokobanMap.sokobanMap__Dynamic.copy(playerPosition = next)
                 result.add(SokobanNode(SokobanMap(sokobanMap.sokobanMap__Static, newDynamic)) to 1)
             } else {
-                if (sokobanMap.sokobanMap__Static[nextNext] != Field.WALL) {
+                if (sokobanMap.sokobanMap__Static[nextNext] != Field.WALL && nextNext !in sokobanMap.sokobanMap__Dynamic.canPositions) {
                     val canPositions = sokobanMap.sokobanMap__Dynamic.canPositions.toMutableList()
                     canPositions.remove(next)
                     canPositions.add(nextNext)
