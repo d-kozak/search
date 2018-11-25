@@ -70,16 +70,19 @@ fun search(startNode: Node): List<Node> {
     var count = 1
     while (openSet.isNotEmpty()) {
         val currentNode = openSet.poll()
-        println("Processing state no ${count++}, depth: ${currentNode.path.size}")
-        println(currentNode)
         if (currentNode.isGoal)
             return currentNode.path
 
+        if (currentNode in closedSet) {
+            print(".")
+            continue
+        }
         closedSet.add(currentNode)
 
+        println("Processing state no ${count++}, depth: ${currentNode.path.size}")
+        println(currentNode)
+
         for ((child, distance) in currentNode.getChildren()) {
-            if (child in closedSet)
-                continue
 
             val newG = currentNode.g + distance
             if (child in openSet) {
