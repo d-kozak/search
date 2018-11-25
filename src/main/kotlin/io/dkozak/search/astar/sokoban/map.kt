@@ -35,6 +35,7 @@ fun parseMap(serializedMap: String): SokobanMap {
                 .map {
                     when (it) {
                         '.' -> Field.Path(isDiamondGoal = false, hasDiamond = false)
+                        'M' -> Field.Path(isDiamondGoal = false, hasDiamond = false)
                         'G' -> Field.Path(isDiamondGoal = true, hasDiamond = false)
                         'J' -> Field.Path(isDiamondGoal = false, hasDiamond = true)
                         else -> Field.Wall
