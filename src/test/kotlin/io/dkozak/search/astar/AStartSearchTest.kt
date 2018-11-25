@@ -5,6 +5,7 @@ import io.dkozak.search.astar.sokoban.SokobanNode
 import io.dkozak.search.astar.sokoban.parseMap
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.io.File
 
 class AStartSearchTest {
 
@@ -33,6 +34,10 @@ class AStartSearchTest {
 
         val directions = result.map { it as SokobanNode }.map { it.direction }
         println(directions)
+
+        File("solutions.dat").bufferedWriter().use {
+            it.write(directions.toString())
+        }
     }
 
     @Test
@@ -111,6 +116,7 @@ class AStartSearchTest {
         println(directions)
 
         assertEquals(listOf(Direction.DUMMY, Direction.RIGHT, Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.LEFT, Direction.DOWN), directions)
+
     }
 
 }
