@@ -14,21 +14,20 @@ interface Node : Comparable<Node> {
 
     var parent: Node?
 
-    var children: MutableList<Pair<Node, Int>>
-
     val isGoal: Boolean
 
     val name: String
 
+    fun getChildren(): MutableList<Pair<Node, Int>>
+
     override fun compareTo(other: Node): Int = Integer.compare(this.total, other.total)
 }
 
-class SimpleNode(
+abstract class SimpleNode(
         override val name: String,
         override var h: Int,
         override var g: Int = -1,
         override val isGoal: Boolean = false,
-        override var children: MutableList<Pair<Node, Int>> = mutableListOf(),
         override var parent: Node? = null
 ) : Node {
 
@@ -44,7 +43,6 @@ class SimpleNode(
     override fun hashCode(): Int {
         return name.hashCode()
     }
-
 
 }
 
@@ -76,7 +74,7 @@ fun search(startNode: Node): List<Node> {
 
         closedSet.add(currentNode)
 
-        for ((child, distance) in currentNode.children) {
+        for ((child, distance) in currentNode.getChildren()) {
             if (child in closedSet)
                 continue
 
