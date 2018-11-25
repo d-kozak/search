@@ -89,6 +89,8 @@ data class SokobanMap__Static(
     } else {
         fields[i][j]
     }
+
+    operator fun get(location: Location) = this[location.first, location.second]
 }
 
 data class SokobanMap__Dynamic(
