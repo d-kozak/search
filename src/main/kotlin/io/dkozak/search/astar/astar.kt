@@ -67,8 +67,11 @@ fun search(startNode: Node): List<Node> {
 
     val closedSet = HashSet<Node>()
 
+    var count = 1
     while (openSet.isNotEmpty()) {
         val currentNode = openSet.poll()
+        println("Processing state no ${count++}, depth: ${currentNode.path.size}")
+        println(currentNode)
         if (currentNode.isGoal)
             return currentNode.path
 
@@ -90,7 +93,6 @@ fun search(startNode: Node): List<Node> {
                 child.parent = currentNode
                 openSet.add(child)
             }
-
         }
     }
 
