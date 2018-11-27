@@ -70,6 +70,9 @@ fun search(startNode: Node): List<Node> {
     var count = 1
     while (openSet.isNotEmpty()) {
         val currentNode = openSet.poll()
+        println("Processing state no ${count++}, depth: ${currentNode.path.size}, heuristics ${currentNode.h}, total ${currentNode.total}")
+        println(currentNode)
+
         if (currentNode.isGoal)
             return currentNode.path
 
@@ -78,9 +81,6 @@ fun search(startNode: Node): List<Node> {
             continue
         }
         closedSet.add(currentNode)
-
-        println("Processing state no ${count++}, depth: ${currentNode.path.size}")
-        println(currentNode)
 
         for ((child, distance) in currentNode.getChildren()) {
 
