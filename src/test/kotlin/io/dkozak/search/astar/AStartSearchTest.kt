@@ -40,6 +40,33 @@ class AStartSearchTest {
         }
     }
 
+
+    @Test
+    fun karlisExample() {
+        val serializedMap = "07 06 02\n" + ("""
+            #######
+            #  #G #
+            #   $ #
+            #$    #
+            #G @  #
+            #######
+        """.trimIndent()
+                .replace("#", "X")
+                .replace(" ", ".")
+                .replace("$", "J")
+                .replace("@", "M"))
+        println(serializedMap)
+
+        val map = parseMap(serializedMap)
+        val state = SokobanNode(map)
+        val result = search(state)
+
+        result.forEach(::println)
+
+        val directions = result.map { it as SokobanNode }.map { it.direction }
+        println(directions)
+    }
+
     @Test
     fun simpleGame() {
         val serializedMap = """
