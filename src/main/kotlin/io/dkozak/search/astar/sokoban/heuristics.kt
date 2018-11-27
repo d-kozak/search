@@ -7,7 +7,7 @@ val SokobanMap.heuristic: Int
     get() {
         val canPositions = this.sokobanMap__Dynamic.canPositions
         return canPositions.map { findNearestGoal(it, this) }
-                .map { it.size }
+                .map { it.size - 1 }
                 .sum()
     }
 

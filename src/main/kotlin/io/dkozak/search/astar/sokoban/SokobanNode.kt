@@ -12,7 +12,7 @@ enum class Direction {
     DUMMY;
 }
 
-class SokobanNode(val sokobanMap: SokobanMap, val direction: Direction = Direction.DUMMY) : SimpleNode("NULL", 0, isGoal = sokobanMap.isFinished) {
+class SokobanNode(val sokobanMap: SokobanMap, val direction: Direction = Direction.DUMMY) : SimpleNode("NULL", sokobanMap.heuristic, isGoal = sokobanMap.isFinished) {
 
     override fun getChildren(): MutableList<Pair<Node, Int>> {
         val result = mutableListOf<Pair<Node, Int>>()
