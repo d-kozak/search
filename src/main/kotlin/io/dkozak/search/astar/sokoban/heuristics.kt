@@ -23,44 +23,67 @@ val SokobanMap.isUsable: Boolean
 val SokobanMap.heuristic: Int
     get() {
         val canPositions = this.sokobanMap__Dynamic.canPositions
-        return canPositions.map { findNearestGoal(it, this) }
-                .map { it.size - 1 }
-                .sum()
+        return canToGoalsDistance(canPositions) + playerToNearestCanDistance()
     }
+
+fun SokobanMap.playerToNearestCanDistance(): Int {
+    val openList = LinkedList<Node>()
+    openList.add(Node(this.sokobanMap__Dynamic.playerPosition))
+    val closedSet = HashSet<Node>()
+    while (openList.isNotEmpty()) {
+        val currentState = openList.removeFirst()
+        if (currentState.location in this.sokobanMap__Dynamic.canPositions)
+            return pathOf(currentState).size - 2
+        if (currentState in closedSet) continue
+        val neighbours = getNeighbours(this, currentState)
+        openList.addAll(neighbours)
+
+
+    }
+    throw IllegalArgumentException("No can found")
+
+}
+
+private fun SokobanMap.canToGoalsDistance(canPositions: List<Location>): Int {
+    return canPositions.map { findNearestGoal(it, this) }
+            .map { it.size - 1 }
+            .sum()
+}
 
 
 fun findNearestGoal(canPosition: Location, sokobanMap: SokobanMap): List<Location> {
-    data class Node(val location: Location, val parent: Node? = null)
-
-    val pathOf: (Node) -> List<Location> = {
-        var currentNode: Node? = it
-        val path = mutableListOf<Location>()
-        while (currentNode != null) {
-            path.add(currentNode.location)
-            currentNode = currentNode.parent
-        }
-        path
-    }
-
-    val getNeighbours: (Node) -> List<Node> = { node ->
-        node.location.neighbours.filter { sokobanMap.sokobanMap__Static[it] == Field.PATH }
-                .map { Node(it, node) }
-
-    }
-
     val openList = LinkedList<Node>()
     openList.add(Node(canPosition))
-    val closedSed = HashSet<Node>()
+    val closedSet = HashSet<Node>()
     while (openList.isNotEmpty()) {
-        val currentNode = openList.removeFirst()
-        if (currentNode.location in sokobanMap.sokobanMap__Static.goals)
-            return pathOf(currentNode)
+        val currentState = openList.removeFirst()
+        if (currentState.location in sokobanMap.sokobanMap__Static.goals)
+            return pathOf(currentState)
 
-        if (currentNode in closedSed) continue
+        if (currentState in closedSet) continue
 
-        val neighbours = getNeighbours(currentNode)
+        val neighbours = getNeighbours(sokobanMap, currentState)
         openList.addAll(neighbours)
 
     }
     throw IllegalArgumentException("No path found")
+}
+
+
+data class Node(val location: Location, val parent: Node? = null)
+
+val pathOf: (Node) -> List<Location> = {
+    var currentNode: Node? = it
+    val path = mutableListOf<Location>()
+    while (currentNode != null) {
+        path.add(currentNode.location)
+        currentNode = currentNode.parent
+    }
+    path
+}
+
+val getNeighbours: (SokobanMap, Node) -> List<Node> = { map, node ->
+    node.location.neighbours.filter { map.sokobanMap__Static[it] == Field.PATH }
+            .map { Node(it, node) }
+
 }

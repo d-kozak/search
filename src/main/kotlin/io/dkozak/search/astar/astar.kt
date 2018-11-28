@@ -70,9 +70,13 @@ fun search(startNode: Node): List<Node> {
     val closedSet = HashSet<Node>()
 
     var count = 1
+    var alreadyExploredStatesCount = 0
+    var invalidStatesCount = 0
     while (openSet.isNotEmpty()) {
         val currentNode = openSet.poll()
         println("Processing state no ${count++}, depth: ${currentNode.path.size}, heuristics ${currentNode.h}, total ${currentNode.total}")
+        println("States excluded because of closed set $alreadyExploredStatesCount")
+        println("Invalid states $invalidStatesCount")
         println(currentNode)
 
         if (currentNode.isGoal)
@@ -80,6 +84,7 @@ fun search(startNode: Node): List<Node> {
 
         if (currentNode in closedSet) {
             print(".\n")
+            alreadyExploredStatesCount++
             continue
         }
         closedSet.add(currentNode)
@@ -88,6 +93,7 @@ fun search(startNode: Node): List<Node> {
 
             if (!child.isUsable) {
                 print("!\n")
+                invalidStatesCount++
                 continue
             }
 

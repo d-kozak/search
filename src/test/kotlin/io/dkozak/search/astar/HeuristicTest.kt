@@ -1,9 +1,6 @@
 package io.dkozak.search.astar
 
-import io.dkozak.search.astar.sokoban.SokobanNode
-import io.dkozak.search.astar.sokoban.heuristic
-import io.dkozak.search.astar.sokoban.isUsable
-import io.dkozak.search.astar.sokoban.parseMap
+import io.dkozak.search.astar.sokoban.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -85,7 +82,9 @@ class HeuristicTest {
         val map = parseMap(serializedMap)
         val state = SokobanNode(map)
         assertEquals(1, map.heuristic)
+        assertEquals(0, map.playerToNearestCanDistance())
         assertTrue(map.isUsable)
+
     }
 
     @Test
@@ -101,6 +100,7 @@ class HeuristicTest {
         val map = parseMap(serializedMap)
         val state = SokobanNode(map)
         assertEquals(2, map.heuristic)
+        assertEquals(0, map.playerToNearestCanDistance())
         assertTrue(map.isUsable)
     }
 
@@ -117,6 +117,62 @@ class HeuristicTest {
         val map = parseMap(serializedMap)
         val state = SokobanNode(map)
         assertEquals(4, map.heuristic)
+        assertEquals(0, map.playerToNearestCanDistance())
+        assertTrue(map.isUsable)
+    }
+
+
+    @Test
+    fun `littleMoreComplex, Player is far away from cans`() {
+        val serializedMap = """
+                        04 04 01
+                        XXXXXX
+                        XM...X
+                        X.J..X
+                        XJX.GX
+                        XGXXXX
+                        XXXXXX
+                        """.trimIndent()
+        val map = parseMap(serializedMap)
+        val state = SokobanNode(map)
+        assertEquals(5, map.heuristic)
+        assertEquals(1, map.playerToNearestCanDistance())
+        assertTrue(map.isUsable)
+    }
+
+    @Test
+    fun `littleMoreComplex, Player is even further away from cans`() {
+        val serializedMap = """
+                        04 04 01
+                        XXXXXXX
+                        XM....X
+                        X..J..X
+                        X.JX.GX
+                        X.GXXXX
+                        X.XXXXX
+                        """.trimIndent()
+        val map = parseMap(serializedMap)
+        val state = SokobanNode(map)
+        assertEquals(2, map.playerToNearestCanDistance())
+        assertEquals(6, map.heuristic)
+        assertTrue(map.isUsable)
+    }
+
+    @Test
+    fun `littleMoreComplex, Player is even more further away from cans`() {
+        val serializedMap = """
+                        04 04 01
+                        M.XXXXX
+                        X.....X
+                        X..J..X
+                        X.JX.GX
+                        X.GXXXX
+                        X.XXXXX
+                        """.trimIndent()
+        val map = parseMap(serializedMap)
+        val state = SokobanNode(map)
+        assertEquals(4, map.playerToNearestCanDistance())
+        assertEquals(8, map.heuristic)
         assertTrue(map.isUsable)
     }
 
