@@ -74,7 +74,7 @@ fun search(startNode: Node): List<Node> {
     var invalidStatesCount = 0
     while (openSet.isNotEmpty()) {
         val currentNode = openSet.poll()
-        println("Processing state no ${count++}, depth: ${currentNode.path.size}, heuristics ${currentNode.h}, total ${currentNode.total}")
+        println("Processing state no ${count++}/${openSet.size}, depth: ${currentNode.path.size}, heuristics ${currentNode.h}, total ${currentNode.total}")
         println("States excluded because of closed set $alreadyExploredStatesCount")
         println("Invalid states $invalidStatesCount")
         println(currentNode)

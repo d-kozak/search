@@ -15,6 +15,10 @@ val Location.neighbours: List<Location>
         )
     }
 
+val Location.neighboursAndDirections: List<Pair<Location, Direction>>
+    get() {
+        return this.neighbours.zip(listOf(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT))
+    }
 
 enum class Field {
     WALL,

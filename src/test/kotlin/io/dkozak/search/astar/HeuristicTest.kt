@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 
 class HeuristicTest {
 
-
     @Test
     fun isUsableTest() {
         val serializedMap = """
@@ -175,5 +174,24 @@ class HeuristicTest {
         assertEquals(8, map.heuristic)
         assertTrue(map.isUsable)
     }
+
+    @Test
+    fun `heuristicsTest `() {
+        // 2 5
+        // this is also an invalid state, beucase we cannot move the can to the goal anymore
+        val serializedMap = """
+        01 01 01
+        XXXXXXX
+        X..XG.X
+        X...MJX
+        XJ....X
+        XG....X
+        XXXXXXX
+        """.trimIndent()
+        val map = parseMap(serializedMap)
+        val node = SokobanNode(map)
+    }
+
+
 
 }
