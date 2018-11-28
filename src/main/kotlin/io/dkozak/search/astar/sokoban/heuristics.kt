@@ -3,6 +3,22 @@ package io.dkozak.search.astar.sokoban
 import java.util.*
 import kotlin.collections.HashSet
 
+
+val SokobanMap.isUsable: Boolean
+    get() {
+        return this.sokobanMap__Dynamic.canPositions.all { canPosition ->
+            val neighbours = canPosition.neighbours
+            for (current in 0 until neighbours.size) {
+                val next = (current + 1) % neighbours.size
+                if (neighbours[current] in this.sokobanMap__Static.goals) continue
+                if (this.sokobanMap__Static[neighbours[current]] == Field.WALL && this.sokobanMap__Static[neighbours[next]] == Field.WALL) {
+                    return false
+                }
+            }
+            true
+        }
+    }
+
 val SokobanMap.heuristic: Int
     get() {
         val canPositions = this.sokobanMap__Dynamic.canPositions
@@ -26,12 +42,7 @@ fun findNearestGoal(canPosition: Location, sokobanMap: SokobanMap): List<Locatio
     }
 
     val getNeighbours: (Node) -> List<Node> = { node ->
-        val location = node.location
-        val neighbourIndexes = listOf(location.first - 1 to location.second,
-                location.first + 1 to location.second,
-                location.first to location.second - 1,
-                location.first to location.second + 1)
-        neighbourIndexes.filter { sokobanMap.sokobanMap__Static[it] == Field.PATH }
+        node.location.neighbours.filter { sokobanMap.sokobanMap__Static[it] == Field.PATH }
                 .map { Node(it, node) }
 
     }

@@ -2,6 +2,20 @@ package io.dkozak.search.astar.sokoban
 
 typealias Location = Pair<Int, Int>
 
+/**
+ * The neighbour indexes in the clockwise fashion, starting from the top
+ */
+val Location.neighbours: List<Location>
+    get() {
+        return listOf(
+                first - 1 to second,
+                first to second + 1,
+                first + 1 to second,
+                first to second - 1
+        )
+    }
+
+
 enum class Field {
     WALL,
     PATH

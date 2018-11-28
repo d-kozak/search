@@ -9,7 +9,7 @@ import java.io.File
 
 class AStartSearchTest {
 
-    //    @Test
+    @Test
     fun competitionMap() {
         val serializedMap = """
                         07 12 04
