@@ -7,10 +7,11 @@ import kotlin.collections.HashSet
 val SokobanMap.isUsable: Boolean
     get() {
         return this.sokobanMap__Dynamic.canPositions.all { canPosition ->
+            if (canPosition in this.sokobanMap__Static.goals)
+                return true
             val neighbours = canPosition.neighbours
             for (current in 0 until neighbours.size) {
                 val next = (current + 1) % neighbours.size
-                if (neighbours[current] in this.sokobanMap__Static.goals) continue
                 if (this.sokobanMap__Static[neighbours[current]] == Field.WALL && this.sokobanMap__Static[neighbours[next]] == Field.WALL) {
                     return false
                 }

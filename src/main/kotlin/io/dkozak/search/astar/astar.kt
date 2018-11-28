@@ -16,6 +16,8 @@ interface Node : Comparable<Node> {
 
     val isGoal: Boolean
 
+    val isUsable: Boolean
+
     val name: String
 
     fun getChildren(): MutableList<Pair<Node, Int>>
@@ -77,12 +79,17 @@ fun search(startNode: Node): List<Node> {
             return currentNode.path
 
         if (currentNode in closedSet) {
-            print(".")
+            print(".\n")
             continue
         }
         closedSet.add(currentNode)
 
         for ((child, distance) in currentNode.getChildren()) {
+
+            if (!child.isUsable) {
+                print("!\n")
+                continue
+            }
 
             val newG = currentNode.g + distance
             if (child in openSet) {

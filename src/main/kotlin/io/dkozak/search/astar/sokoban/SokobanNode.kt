@@ -43,6 +43,9 @@ class SokobanNode(val sokobanMap: SokobanMap, val direction: Direction = Directi
         return result
     }
 
+    override val isUsable: Boolean
+        get() = sokobanMap.isUsable
+
     override fun toString(): String = sokobanMap.toString()
 
     override fun equals(other: Any?): Boolean {
