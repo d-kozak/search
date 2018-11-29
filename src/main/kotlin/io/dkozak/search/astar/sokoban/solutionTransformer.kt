@@ -26,11 +26,26 @@ private enum class Directions {
 fun createOrders(directions: String): List<Order> {
     val orders = mutableListOf<Order>()
     var currentDirection = Directions.DOWN
-    for (elem in directions) {
+    var i = 0
+    while (i < directions.length) {
+        val elem = directions[i]
+        val currentMoveWithoutCan = elem.isLowerCase()
+        val lastMoveWithCan = if (i - 1 > 0) (directions[i - 1]).isUpperCase() else false
         val fullRotation = "full_rotation()"
         val left = "turn_left()"
         val right = "turn_right()"
         val forward = "move_forward()"
+
+        if (currentMoveWithoutCan && lastMoveWithCan) {
+            orders.addAll(listOf(forward, fullRotation))
+            currentDirection = when (currentDirection) {
+                Directions.UP -> Directions.DOWN
+                Directions.DOWN -> Directions.UP
+                Directions.LEFT -> Directions.RIGHT
+                Directions.RIGHT -> Directions.LEFT
+            }
+        }
+
         when (elem) {
             'u', 'U' -> {
                 when (currentDirection) {
@@ -71,6 +86,7 @@ fun createOrders(directions: String): List<Order> {
             }
 
         }
+        i++
     }
     return orders
 }
