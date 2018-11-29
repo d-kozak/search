@@ -27,10 +27,10 @@ fun createOrders(directions: String): List<Order> {
     val orders = mutableListOf<Order>()
     var currentDirection = Directions.DOWN
     for (elem in directions) {
-        val fullRotation = "fullRotation()"
-        val left = "turnLeft()"
-        val right = "turnRight()"
-        val forward = "moveForward()"
+        val fullRotation = "full_rotation()"
+        val left = "turn_left()"
+        val right = "turn_right()"
+        val forward = "move_forward()"
         when (elem) {
             'u', 'U' -> {
                 when (currentDirection) {
