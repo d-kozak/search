@@ -7,10 +7,12 @@ package io.dkozak.search.astar.sokoban
  * left
  * right
  */
-val input = "dlllluuuuRRdrUUUruLLLulDrrrdddlllddrUluRRdrUUUruLdlUruLLrrdddddllldddrrrruLdllUUUluRRdrUUUluRurDlddddlldddrruLdlUUUluRRdrUUUluurrdLulD"
+val input = "dlllluuuuRRdrUUUruLLLulDrrrdddlllddrUluRRdrUUU ruLdlUruLLrr dddddllldddrrrruLdllUUUluRRdrUUUluRurDlddddlldddrruLdlUUUluRRdrUUUluurrdLulD"
+
+val betterInput = "dlllluuuuRRdrUUUruLLLulDrrrdddlllddrUluRRdrUUUUruLLLrrddddlllddddrUUUluRRdrUUUluRurDldddllddddrrruLLdlUUUluRRdrUUUluurrdLulD"
 
 fun main(args: Array<String>) {
-    val orders = createOrders(input)
+    val orders = createOrders(betterInput)
     orders.forEach(::println)
 }
 
